@@ -23,7 +23,7 @@ class ProductAdapter(private val products: List<Product>) :
                 binding.hardDiskTextView.text = productData.hardDiskSize?.let { "Hard Disk: $it GB" } ?: "Hard Disk: N/A"
                 binding.screenSizeTextView.text = productData.screenSize?.let { "Screen Size: $it " } ?: "Screen Size: N/A"
                 binding.descriptionTextView.text = productData.description?.let { "Description: $it" } ?:"Description: N/A"
-// Show year if available, otherwise hide the TextView
+
                 if (productData.year != null) {
                     binding.yearTextView.text = "Year: ${productData.year}"
                     binding.yearTextView.visibility = View.VISIBLE
@@ -31,7 +31,7 @@ class ProductAdapter(private val products: List<Product>) :
                     binding.yearTextView.visibility = View.GONE
                 }
             } else {
-// If ProductData is null, hide the optional views
+
                 binding.colorTextView.text = "Color: N/A"
                 binding.generationTextView.text = "Generation: N/A"
                 binding.priceTextView.text = "Price: N/A"
@@ -41,7 +41,6 @@ class ProductAdapter(private val products: List<Product>) :
                 binding.screenSizeTextView.text = "Screen Size: N/A"
                 binding.descriptionTextView.text= "Description: N/A"
                 binding.yearTextView.visibility = View.GONE
-        //        binding.descriptionTextView.visibility = View.GONE
             }
         }
     }

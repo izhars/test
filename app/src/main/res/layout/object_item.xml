@@ -12,10 +12,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
+        android:padding="10dp"
         android:orientation="vertical">
 
-        <!-- Name of the object -->
         <TextView
             android:id="@+id/nameTextView"
             android:layout_width="wrap_content"
@@ -25,52 +24,47 @@
             android:textStyle="bold"
             android:layout_marginBottom="4dp" />
 
-        <!-- Generation -->
         <TextView
             android:id="@+id/generationTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+             />
 
         <TextView
             android:id="@+id/descriptionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+             />
 
-        <!-- Price -->
         <TextView
             android:id="@+id/priceTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+             />
 
-        <!-- Capacity -->
         <TextView
             android:id="@+id/capacityTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+             />
 
-        <!-- Color -->
         <TextView
             android:id="@+id/colorTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+             />
 
-        <!-- Year (Optional field) -->
         <TextView
             android:id="@+id/yearTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:textAppearance="?android:attr/textAppearanceSmall"
+
             android:visibility="gone" />
 
         <TextView
@@ -78,21 +72,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+             />
 
         <TextView
             android:id="@+id/hardDiskTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+             />
 
         <TextView
             android:id="@+id/screenSizeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+             />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
