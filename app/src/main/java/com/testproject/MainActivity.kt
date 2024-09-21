@@ -15,11 +15,11 @@ import com.testproject.room.ProductViewModel
 class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: ProductAdapter
-    private lateinit var progBar: ProgressBar
-    private lateinit var swipeRefreshLayout: SwipeRefreshLayout // Add this line
+    private lateinit var productAdapter: ProductAdapter
+    private lateinit var progressBar: ProgressBar
+    private lateinit var swipeLayout: SwipeRefreshLayout
 
-    private val viewModel: ProductViewModel by viewModels {
+    private val productViewModel: ProductViewModel by viewModels {
         ViewModelFactory((application as MyApp).repository)
     }
 
@@ -27,45 +27,48 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        recyclerView = findViewById(R.id.recyclerView)
-        progBar = findViewById(R.id.progressBar)
-        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)
+        setupUI()
+        setupObservers()
 
-        recyclerView.layoutManager = LinearLayoutManager(this)
-
-        progBar.visibility = View.VISIBLE
-        viewModel.products.observe(this) { products ->
-            progBar.visibility = View.GONE
-            if (products != null && products.isNotEmpty()) {
-                adapter = ProductAdapter(products)
-                recyclerView.adapter = adapter
-            } else {
-
-            }
-            progBar.visibility = View.GONE
-            swipeRefreshLayout.isRefreshing = false
-        }
-        refreshData()
-        swipeRefreshLayout.setOnRefreshListener {
-            refreshData()
+        swipeLayout.setOnRefreshListener {
+            loadProductData()
         }
     }
 
-    private fun refreshData() {
+    private fun setupUI() {
+        recyclerView = findViewById(R.id.recyclerView)
+        progressBar = findViewById(R.id.progressBar)
+        swipeLayout = findViewById(R.id.swipeRefreshLayout)
+
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        progressBar.visibility = View.VISIBLE
+    }
+
+    private fun setupObservers() {
+        productViewModel.products.observe(this) { productList ->
+            progressBar.visibility = View.GONE
+            swipeLayout.isRefreshing = false
+
+            if (!productList.isNullOrEmpty()) {
+                productAdapter = ProductAdapter(productList)
+                recyclerView.adapter = productAdapter
+            }
+        }
+
+        loadProductData()
+    }
+
+    private fun loadProductData() {
         if (NetworkUtils.isNetworkAvailable(this)) {
-            if (!swipeRefreshLayout.isRefreshing) {
-                progBar.visibility = View.VISIBLE
+            if (!swipeLayout.isRefreshing) {
+                progressBar.visibility = View.VISIBLE
             }
 
-            viewModel.refreshProducts(this)
-            swipeRefreshLayout.isRefreshing = true
+            productViewModel.refreshProducts(this)
+            swipeLayout.isRefreshing = true
         } else {
-            Toast.makeText(this, "Internet is not available.", Toast.LENGTH_SHORT).show()
-            swipeRefreshLayout.isRefreshing = false
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show()
+            swipeLayout.isRefreshing = false
         }
     }
 }
-
-
-
-

@@ -1,47 +1,47 @@
 package com.testproject.room
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.testproject.databinding.ObjectItemBinding
 
-class ProductAdapter(private val products: List<Product>) :
+class ProductAdapter(private val productList: List<Product>) :
     RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
-    inner class ProductViewHolder(private val binding: ObjectItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(product: Product) {
-            binding.nameTextView.text = product.name
+    inner class ProductViewHolder(private val binding: ObjectItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-            val productData = product.data
-            if (productData != null) {
-                binding.colorTextView.text = productData.color?.let { "Colour: $it" } ?:"Colour: N/A"
-                binding.generationTextView.text = productData.generation?.let { "Generation: $it" } ?:"Generation: N/A"
-                binding.priceTextView.text = productData.price?.let { "Price: $it" } ?: "Price: N/A"
-                binding.capacityTextView.text = productData.capacity?.let { "Capacity: $it " } ?: "Capacity: N/A"
-                binding.cpuModelTextView.text = productData.cpuModel ?.let { "CPU Model: $it" } ?: "CPU Model: N/A"
-                binding.hardDiskTextView.text = productData.hardDiskSize?.let { "Hard Disk: $it GB" } ?: "Hard Disk: N/A"
-                binding.screenSizeTextView.text = productData.screenSize?.let { "Screen Size: $it " } ?: "Screen Size: N/A"
-                binding.descriptionTextView.text = productData.description?.let { "Description: $it" } ?:"Description: N/A"
-
-                if (productData.year != null) {
-                    binding.yearTextView.text = "Year: ${productData.year}"
-                    binding.yearTextView.visibility = View.VISIBLE
-                } else {
-                    binding.yearTextView.visibility = View.GONE
-                }
-            } else {
-
-                binding.colorTextView.text = "Color: N/A"
-                binding.generationTextView.text = "Generation: N/A"
-                binding.priceTextView.text = "Price: N/A"
-                binding.capacityTextView.text = "Capacity: N/A"
-                binding.cpuModelTextView.text = "CPU Model: N/A"
-                binding.hardDiskTextView.text = "Hard Disk: N/A"
-                binding.screenSizeTextView.text = "Screen Size: N/A"
-                binding.descriptionTextView.text= "Description: N/A"
-                binding.yearTextView.visibility = View.GONE
+        fun bindProduct(product: Product) {
+            with(binding) {
+                nameTextView.text = product.name
+                product.data?.let { productDetails ->
+                    bindDetails(productDetails)
+                } ?: clearDetails()
             }
+        }
+
+        private fun ObjectItemBinding.bindDetails(productDetails: ProductData) {
+            colorTextView.text = productDetails.color ?: "N/A"
+            generationTextView.text = productDetails.generation ?: "N/A"
+            priceTextView.text = productDetails.price?.toString() ?: "N/A"
+            capacityTextView.text = productDetails.capacity ?: "N/A"
+            cpuModelTextView.text = productDetails.cpuModel ?: "N/A"
+            hardDiskTextView.text = productDetails.hardDiskSize?.let { "$it GB" } ?: "N/A"
+            screenSizeTextView.text = productDetails.screenSize?.toString() ?: "N/A"
+            descriptionTextView.text = productDetails.description ?: "N/A"
+            yearTextView.text = productDetails.year?.toString() ?: "N/A"
+        }
+
+        private fun ObjectItemBinding.clearDetails() {
+            colorTextView.text = "N/A"
+            generationTextView.text = "N/A"
+            priceTextView.text = "N/A"
+            capacityTextView.text = "N/A"
+            cpuModelTextView.text = "N/A"
+            hardDiskTextView.text = "N/A"
+            screenSizeTextView.text = "N/A"
+            descriptionTextView.text = "N/A"
+            yearTextView.text = "N/A"
         }
     }
 
@@ -51,8 +51,8 @@ class ProductAdapter(private val products: List<Product>) :
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        holder.bind(products[position])
+        holder.bindProduct(productList[position])
     }
 
-    override fun getItemCount(): Int = products.size
+    override fun getItemCount(): Int = productList.size
 }
